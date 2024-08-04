@@ -12,6 +12,8 @@ console.log(document.querySelector('.guess').value) ;
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
+
+//getting highscore from local storage
 let highscore = Number(localStorage.getItem('highscore'));
 
 
@@ -24,12 +26,9 @@ const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
 
-document.querySelector('.check').addEventListener('click', function () {
-  const guess = Number(document.querySelector('.guess').value);
-  //console.log(guess);
-
-  //no guesses
-  if (!guess) {
+const check= function(guess){
+   //no guesses
+   if (!guess) {
     displayMessage('No Number!😒 ');
   } else if (guess === secretNumber) {
     displayMessage('Correct Number!🎉');
@@ -43,6 +42,8 @@ document.querySelector('.check').addEventListener('click', function () {
     if (score > highscore) {
       highscore = score;
       document.querySelector('.highscore').textContent = highscore;
+
+      //storing the highscore in local storage
       localStorage.setItem('highscore', highscore);
 
     }
@@ -56,7 +57,26 @@ document.querySelector('.check').addEventListener('click', function () {
     }
     document.querySelector('.score').textContent = score;
   }
+}
+
+
+//to take click as submission
+document.querySelector('.check').addEventListener('click', function () {
+  const guess = Number(document.querySelector('.guess').value);
+  //console.log(guess);
+  check(guess);
 });
+
+
+//to take 'enter' as submission
+document.querySelector('.guess').addEventListener('keyup',function(e){
+  const guess = Number(document.querySelector('.guess').value);
+  if(e.keyCode===13){
+    check(guess);
+  }
+
+});
+ 
 
 document.querySelector('.again').addEventListener('click', function () {
   score = 20;
