@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import groceryCartImg from "./assets/grocery-cart.png"
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <main className="App">
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <div>
+          <h4 className="success">You are DONE!!</h4>
+          <div className="header">
+            <h1>Shopping List</h1>
+            <img src={groceryCartImg} alt="animated grocery cart" />
+            <input type="text" placeholder="Insert an item" />
+          </div>
+        </div>
+
+        <ul >
+          <li>
+            <div className="container">
+              <input type="checkbox" />
+              <p>Carrot</p>
+            </div>
+            <div>
+              <button className="remove-button">x</button>
+            </div>
+          </li>
+        </ul>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </main>
+  );
 }
 
-export default App
+export default App;
