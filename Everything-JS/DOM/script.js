@@ -1,105 +1,53 @@
-"use strict";
-/*
-const link = document.querySelector("a");
-console.log(link.getAttribute("href"));
+document.addEventListener("DOMContentLoaded", function() {
+  // Function to add a new item to the itemList
+  function addItem() {
+      let itemList = document.getElementById("itemList");
+      let newItemText = document.getElementById("newItemText").value;
 
+      if (newItemText === "") {
+          alert("Please enter some text for the item.");
+          return;
+      }
 
-const msg =document.querySelector('h1');
+      // Create a new item element
+      let newItem = document.createElement("div");
+      newItem.classList.add("item");
 
-console.log(msg.style);
+      // Create text node
+      let textNode = document.createElement("span");
+      textNode.textContent = newItemText;
 
-msg.style.margin='50px';
-msg.style.color='crimson';
+      // Create remove button for each item
+      let removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.classList.add("btn", "btn-danger");
+      removeBtn.onclick = function() {
+          itemList.removeChild(newItem);
+      };
 
+      // Append text and button to new item
+      newItem.appendChild(textNode);
+      newItem.appendChild(removeBtn);
 
- const para=(document.querySelector('body > h1')
-);
+      // Append the new item to the itemList
+      itemList.appendChild(newItem);
 
-console.log(para);
-
-const paragraphs=document.querySelectorAll('p');
-
-console.log(paragraphs[0]);
-
-paragraphs.forEach(par=>{console.log(par);});
-
- 
-
-console.log(para.innerText);
-para.innerText +=' ninjas are awesome';
-
-
-paras.forEach(para =>{
-    console.log(para.innerText);
-    para.innerText+='New text';
-})
-
-const paras = document.querySelectorAll("p");
-const para = document.querySelector("p");
-
-const content = document.querySelector(".content");
-
-// console.log(content.innerHTML);
-
-// content.innerHTML='<h2>This is a new H2.</h2>'
-
-const people = ["mario", " luigi", 'yoshi'];
-people.forEach(person =>{
-    content.innerHTML+= `<p>${person}</p>`;
-});
-
-const title= document.querySelector('h1');
-console.log(title.sytle);
-
-console.log(title.style.color);
-title.style.margin = '50px' ;
-
-title.setAttribute('style','margin: 50px')
-
-const content = document.querySelector('p');
-
-content.classList.add('error');
-
-
-const content = document.querySelectorAll("p");
-
-content.forEach((p) => {
-    if (p.textContent.includes("error")) {
-      p.classList.add("error");
-    }
-    if (p.textContent.includes("success")) {
-      p.classList.add("success");
-    }
-  });
-   
-
-*/
-
-const ul = document.querySelector("ul");
-
-const button = document.querySelector("button");
-
-button.addEventListener("click", () => {
-  const li = document.createElement("li");
-  li.textContent = "something new to do";
-  ul.append(li);
-  //   ul.prepend(li);
-});
-
-// const items = document.querySelectorAll("li");
-
-// items.forEach((item) => {
-//   item.addEventListener("click", (e) => {
-//     //console.log(e.target);
-//     //e.target.style.textDecoration = "line-through";
-//     e.target.remove();
-
-//   });
-// });
-
-ul.addEventListener("click", (e) => {
-  console.log(e.target);
-  if(e.target.tagName==='LI'){
-    e.target.remove();
+      // Clear the input field
+      document.getElementById("newItemText").value = "";
   }
+
+  // Function to remove the last item from the itemList
+  function removeItem() {
+      let itemList = document.getElementById("itemList");
+
+      // Check if there are any items to remove
+      if (itemList.childElementCount > 0) {
+          // Remove the last child (last item added)
+          itemList.removeChild(itemList.lastChild);
+      }
+  }
+
+  // Attach addItem and removeItem functions to the global scope
+  window.addItem = addItem;
+  window.removeItem = removeItem;
 });

@@ -1,34 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
-     <style>
-      li{
-        list-style-type: none;
-        max-width: 200px;
-        padding: 8px;
-        margin: 8px auto;
-        background: #eee;
-        border: 1px dotted #ddd;
-      }
-     </style>
-  </head>
-  <body> 
-    <h1>Grocery List</h1>
-    <ul>
-      <p>These are very weird list items.</p>
-      <li>banana</li>
-      <li>oil</li>
-      <li>jam</li>
-      <li>bread</li>
-      <li>eggs</li>
-    </ul>
-    <button>click me</button>
-    <a href="https://www.google.com"></a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extended DOM Manipulation Example</title>
+    <style>
+        .item {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            padding: 5px 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h2>Extended DOM Manipulation Example</h2>
+
+    <input type="text" id="newItemText" placeholder="Enter item text">
+    <button class="btn" onclick="addItem()">Add Item</button>
+    <button class="btn btn-danger" onclick="removeItem()">Remove Last Item</button>
+
+    <div id="itemList">
+        <!-- Items will be dynamically added here -->
+    </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
