@@ -1,5 +1,4 @@
 import React from "react";
-import { StrictMode } from "react";
 
 import ReactDOM from "react-dom/client";
 import {
@@ -11,14 +10,16 @@ import {
 
 import AboutPage from "./pages/AboutPage.jsx";
 import "./index.css";
-import HomePage from "./pages/homepage.jsx";
 import App from "./App.jsx";
+import RecipePage from "./pages/RecipePage.jsx";
+import HomePage from "./pages/HomePage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path ="/" element ={<App/>}>
-      <Route path="/" element={<HomePage />} />
+    <Route path="/" element={<App />}>
+      <Route path="/" element={<HomePage/>} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/recipe/:id" element={<RecipePage />} />
     </Route>
   )
 );
