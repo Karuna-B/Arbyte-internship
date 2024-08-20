@@ -1,13 +1,11 @@
 import "./App.css";
-import CardList from "./components/CardList";
-import Header from "./components/Header";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <main className="main_container"> 
-        <Header/>
-        <CardList/>
+      <main className="main_container">
+        <Outlet />
       </main>
     </div>
   );
