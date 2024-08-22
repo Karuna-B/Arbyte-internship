@@ -1,9 +1,9 @@
-export default function RecipeNutritionalFact(){
+export default function RecipeNutritionalFact({ fact, children }) {
     return (
-        <div className="recipe-fact-container">
-            <img src="" alt="" />
-            <h3>1300</h3>
-            <p>calories</p>
-        </div>
-    )
-}
+      <div className="recipe-fact-container">
+        {children}
+        <h3>{fact.amount}</h3>
+        <p>{fact.category}</p>
+      </div>
+    );
+  }
