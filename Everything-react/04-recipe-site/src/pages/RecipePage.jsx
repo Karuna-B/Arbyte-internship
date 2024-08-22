@@ -4,6 +4,8 @@ import RecipeHeader from "../components/RecipeHeader";
 import useFetchRecipe from "../hooks/useFetchRecipe";
 import Loading from "../components/Loading";
 import RecipeInfo from "../components/RecipeInfo";
+import Error from "../components/Error";
+
 
 export default function RecipePage() {
   const { id } = useParams();
@@ -12,15 +14,17 @@ export default function RecipePage() {
     fetchRecipe(id);
   }, []);
 
- 
   if (loading) return <Loading />;
   if (error) return <h1>{error}</h1>;
+  if (data && data.errors) return <Error explanation="Recipe not Found" />;
+
+  // If no data is found
+  if (!data) return <Error explanation="Recipe not Found" />;
 
   return (
     <div>
       {data && (
         <>
-          
           <RecipeHeader nutritionalFacts={data.nutrition} name={data.name} />
           <RecipeInfo
             instructions={data.instructions}
