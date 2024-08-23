@@ -8,7 +8,7 @@ export default function BrowsePage() {
       <NavBar />
       <Billboard />
       <div className="pb-5">
-        <MovieList />
+        {/* <MovieList /> */}
       </div>
     </div>
   );
