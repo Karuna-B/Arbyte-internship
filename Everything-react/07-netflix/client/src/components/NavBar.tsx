@@ -12,8 +12,8 @@ export default function NavBar() {
     <nav className="w-full fixed z-40">
       <div className="px-16 py-6 flex items-center">
         <img
-          className="h-16"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQeRoc_BhrP-jahuwf0Hrxe48LiP6DiHWiiw&s"
+          className="h-28"
+          src="https://loodibee.com/wp-content/uploads/Netflix-logo.png"
           alt="netflix logo"
         />
         <div className="flex gap-7 ml-8">
