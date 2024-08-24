@@ -1,15 +1,16 @@
 import Billboard from "../components/Billboard";
 import NavBar from "../components/NavBar";
 import MovieList from "../components/MovieList";
+import useMoviesList from "../hooks/useMoviesList";
 
 export default function BrowsePage() {
+  const { data, loading, error } = useMoviesList();
+
   return (
     <div>
       <NavBar />
       <Billboard />
-      <div className="pb-5">
-        {/* <MovieList /> */}
-      </div>
+      <div className="pb-5"></div>
     </div>
   );
 }
