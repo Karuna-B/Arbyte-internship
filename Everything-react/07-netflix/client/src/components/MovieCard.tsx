@@ -1,24 +1,15 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import { Movie } from "../types";
+import { Movie } from "../types/index";
 
-const MovieCard = ({
-  movie,
-  lastElementRef,
-}: {
-  movie: Movie;
-  lastElementRef: ((node: HTMLDivElement) => void) | null;
-}) => {
+const MovieCard = ({ movie }: { movie: Movie }) => {
   const { thumbnailUrl, id, description, duration, title, genre } = movie;
 
   const navigate = useNavigate();
 
   return (
-    <div
-      className="group bg-zinc-900 col-span relative h-[12vw] w-[24%]"
-      ref={lastElementRef}
-    >
+    <div className="group bg-zinc-900 col-span relative h-[12vw] w-[24%]">
       <img
         src={thumbnailUrl}
         alt="Movie"
