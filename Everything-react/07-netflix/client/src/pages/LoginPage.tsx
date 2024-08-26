@@ -7,6 +7,8 @@ import {
   UseFormRegister,
   FieldErrors,
 } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export type Inputs = {
   email: string;
@@ -37,8 +39,36 @@ export default function LoginPage() {
   } = useForm<Inputs>();
   const [variant, setVariant] = useState(Variant.LOG_IN);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {};
+  const [authError, setAuthError] = useState("");
 
+  const { signup, login } = useAuth();
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<Inputs> = async ({ password, email, name }) => {
+    try {
+      if (variant === Variant.SIGN_UP) {
+        await signup({
+          email,
+          password,
+          username: name,
+        });
+      } else {
+        await login({
+          email,
+          password,
+        });
+      }
+      setAuthError("");
+    } catch (error: any) {
+      setAuthError(error.response.data.errors[0]);
+    }
+  };
+
+  const handleChangeAuthVariant = () => {
+    if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
+    else setVariant(Variant.LOG_IN);
+    setAuthError("");
+    navigate("/browse");
+  };
   return (
     <div className="relative bg-black h-screen w-screen bg-opacity-50">
       <NavBar />
@@ -103,12 +133,13 @@ export default function LoginPage() {
                 type="submit"
                 className="bg-red-400 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700"
               />
+              {authError && <p className="text-red-500">{authError}</p>}
             </form>
           </AuthFormContext.Provider>
           {variant === Variant.LOG_IN ? (
             <p
               className="text-neutral-500 mt-12"
-              onClick={() => setVariant(Variant.SIGN_UP)}
+              onClick={handleChangeAuthVariant}
             >
               <span className="text-white ml-1 hover:underline cursor-pointer">
                 First Time Using Netflix?
@@ -117,7 +148,7 @@ export default function LoginPage() {
           ) : (
             <p
               className="text-neutral-500 mt-12"
-              onClick={() => setVariant(Variant.LOG_IN)}
+              onClick={handleChangeAuthVariant}
             >
               <span className="text-white ml-1 hover:underline cursor-pointer">
                 Already have an account?

@@ -1,4 +1,4 @@
-const router = require("express").router;
+const router = require("express").Router;
 const { check, validationResult } = require("express-validator");
 const { prisma } = require("../db");
 const { bcrypt } = require("bcrypt");

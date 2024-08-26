@@ -4,12 +4,18 @@ import MovieList from "../components/MovieList";
 import useMoviesList from "../hooks/useMoviesList";
 import { useState, useRef, useCallback } from "react";
 import LoadingCards from "../components/LoadingCards";
+import { useSelector, UseSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 export default function BrowsePage() {
   const [offset, setOffset] = useState(0);
   const { data, loading, error } = useMoviesList(offset);
 
   const observer = useRef<null | IntersectionObserver>(null);
+
+  const {} = useSelector(
+    (state: RootState) => state.user.value
+  );
 
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {

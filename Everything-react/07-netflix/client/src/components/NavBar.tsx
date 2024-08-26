@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import useAuth from "../hooks/useAuth";
 
 const tabs = [
   "Home",
@@ -10,6 +13,10 @@ const tabs = [
 ];
 
 export default function NavBar() {
+  const { user, isLoading } = useSelector(
+    (state: RootState) => state.user.value
+  );
+  const { logout } = useAuth();
   const [showBackground, setShowBackground] = useState(false);
 
   useEffect(() => {
@@ -43,6 +50,13 @@ export default function NavBar() {
             </div>
           ))}
         </div>
+        {user && !isLoading && (
+          <div>
+            <div className="text-white hover:text-gray-300 cursor-pointer">
+              <p onClick={logout}>Logout</p>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
