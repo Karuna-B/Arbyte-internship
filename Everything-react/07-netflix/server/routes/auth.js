@@ -1,13 +1,13 @@
-const router = require("express").Router;
+const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
 const { prisma } = require("../db");
-const { bcrypt } = require("bcrypt");
+const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 
 router.post(
   "/signup",
   [
-    check("email", "please input a valid email"),
+    check("email", "Please input a valid email").isEmail(),
     check(
       "password",
       "Please input a password with a min length of 6"
@@ -19,6 +19,7 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
@@ -35,17 +36,16 @@ router.post(
 
     if (user) {
       return res.status(400).json({
-        errors: [{ msg: "This user aready exists" }],
+        errors: [{ msg: "This user already exists" }],
       });
     }
-
-    const hashPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
       data: {
         email,
         username,
-        password: hashPassword,
+        password: hashedPassword,
       },
       select: {
         id: true,
@@ -55,8 +55,9 @@ router.post(
     });
 
     const token = await JWT.sign(newUser, process.env.JSON_WEB_TOKEN_SECRET, {
-      expiresIn: 36000,
+      expiresIn: 3600000,
     });
+
     return res.json({
       user: newUser,
       token,
@@ -64,13 +65,22 @@ router.post(
   }
 );
 
+// Validate that the user does exist
+// Validate the password
+// Return a JWT
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { email } });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
 
   if (!user) {
     return res.status(400).json({
-      errors: [{ msg: "Invalid Credentials" }],
+      errors: [{ msg: "Invalid credentials" }],
     });
   }
 
@@ -78,7 +88,7 @@ router.post("/login", async (req, res) => {
 
   if (!isMatch) {
     return res.status(400).json({
-      errors: [{ msg: "Invalid Credentials" }],
+      errors: [{ msg: "Invalid credentials" }],
     });
   }
 
@@ -89,7 +99,7 @@ router.post("/login", async (req, res) => {
   };
 
   const token = await JWT.sign(userPayload, process.env.JSON_WEB_TOKEN_SECRET, {
-    expiresIn: 36000,
+    expiresIn: 3600000,
   });
 
   return res.json({
@@ -101,13 +111,12 @@ router.post("/login", async (req, res) => {
 router.get("/me", async (req, res) => {
   const bearerToken = req.headers.authorization;
   if (!bearerToken) return res.send(null);
-  const jwt = bearerToken.split("Bearer")[1];
+  const jwt = bearerToken.split("Bearer ")[1];
   if (!jwt) return res.send(null);
 
   let payload;
-
   try {
-    payload = await JWT.verify(jwt, process.eventNames.JSON_WEB_TOKEN_SECRET);
+    payload = await JWT.verify(jwt, process.env.JSON_WEB_TOKEN_SECRET);
   } catch (error) {
     return res.send(null);
   }
@@ -126,6 +135,4 @@ router.get("/me", async (req, res) => {
   return res.json(user);
 });
 
-module.exports = {
-  router,
-};
+module.exports = router;

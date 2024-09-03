@@ -35,7 +35,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
     getValues,
-    watch,
+    reset,
   } = useForm<Inputs>();
   const [variant, setVariant] = useState(Variant.LOG_IN);
 
@@ -58,6 +58,7 @@ export default function LoginPage() {
         });
       }
       setAuthError("");
+      navigate("/browse");
     } catch (error: any) {
       setAuthError(error.response.data.errors[0]);
     }
@@ -66,8 +67,8 @@ export default function LoginPage() {
   const handleChangeAuthVariant = () => {
     if (variant === Variant.LOG_IN) setVariant(Variant.SIGN_UP);
     else setVariant(Variant.LOG_IN);
+    reset();
     setAuthError("");
-    navigate("/browse");
   };
   return (
     <div className="relative bg-black h-screen w-screen bg-opacity-50">
@@ -75,7 +76,7 @@ export default function LoginPage() {
       <div className="flex justify-center items-center h-full">
         <div className="bg-black bg-opacity-70 p-16 self-center mt-2 w-full max-w-md">
           {variant === Variant.LOG_IN ? (
-            <h2 className="text-white text-4xl mb-8 font-semibold">Log In</h2>
+            <h2 className="text-white text-4xl mb-8 font-semibold">Log In </h2>
           ) : (
             <h2 className="text-white text-4xl mb-8 font-semibold">Sign Up</h2>
           )}
