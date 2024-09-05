@@ -1,8 +1,8 @@
-const express = require("express");
-const path = require("path");
-const port = process.env.PORT || 8080;
+import express from "express";
+import path from "path";
+import posts from "./routes/posts.js";
 
-const posts = require("./routes/posts");
+const port = process.env.PORT || 8080;
 
 const app = express();
 
@@ -16,6 +16,10 @@ const app = express();
 // app.get("/about", (req, res) => {
 //   res.sendFile(path.join(__dirname, "public", "about.html"));
 // });
+
+//body parser middleware
+app.use(express.json( ));
+app.use(express.urlencoded({ extended: false }));
 
 //Routes
 app.use("/api/posts", posts);
